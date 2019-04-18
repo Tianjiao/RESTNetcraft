@@ -17,14 +17,14 @@ namespace ReportMail
 {
     internal class MailObject
     {
-        public string email { get; set; }
-        public string message { get; set; }
+        public string Email { get; set; }
+        public string Message { get; set; }
     }
 
     internal class UrlReportFeedbackObject
     {
-        public string message { get; set; }
-        public string uuid { get; set; }
+        public string Message { get; set; }
+        public string Uuid { get; set; }
     }
 
     class Program
@@ -34,15 +34,19 @@ namespace ReportMail
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
             
             var client = new RestClient("https://report.netcraft.com/api/v1");
-            
-            var request = new RestRequest("test/report/mail"); // Test server
-            request.RequestFormat = DataFormat.Json;
-            request.Method = Method.POST;
-            
-            var messageSent = new MailObject();
-            messageSent.email = "demo222@gmail.com";
+
+            var request = new RestRequest("test/report/mail")
+            {
+                RequestFormat = DataFormat.Json,
+                Method = Method.POST
+            }; // Test server
+
+            var messageSent = new MailObject
+            {
+                Email = "demo222@gmail.com"
+            };
             var messageContent = MimeMessage.Load(@"D:\sample.eml");
-            messageSent.message = messageContent.ToString();
+            messageSent.Message = messageContent.ToString();
 
             request.AddHeader("Accept", "application/json");
 
@@ -61,8 +65,8 @@ namespace ReportMail
                 if (!string.IsNullOrEmpty(restResponse.Content))
                 {
                     Console.WriteLine(restResponse.Content);
-                    Console.WriteLine("restResponse message is " + restResponse.Data.message);
-                    Console.WriteLine("restResponse uuid is " + restResponse.Data.uuid);
+                    Console.WriteLine("restResponse message is " + restResponse.Data.Message);
+                    Console.WriteLine("restResponse uuid is " + restResponse.Data.Uuid);
                 }
                     
             }
