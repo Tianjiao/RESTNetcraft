@@ -16,16 +16,16 @@ namespace ReportMail
 {
     internal class UrlsReporterObject
     {
-        public string email { get; set; } // Reporter's email
-        public string reason { get; set; }
-        public string source { get; set; }
-        public string[] urls { get; set; }
+        public string Email { get; set; } // Reporter's email
+        public string Reason { get; set; }
+        public string Source { get; set; }
+        public string[] Urls { get; set; }
     }
 
     internal class UrlReportFeedbackObject
     {
-        public string message { get; set; }
-        public string uuid { get; set; }
+        public string Message { get; set; }
+        public string Uuid { get; set; }
     }
 
     class Program
@@ -36,14 +36,18 @@ namespace ReportMail
 
             var client = new RestClient("https://report.netcraft.com/api/v1");
 
-            var request = new RestRequest("test/report/urls"); // Test server
-            request.RequestFormat = DataFormat.Json;
-            request.Method = Method.POST;
+            var request = new RestRequest("test/report/urls")
+            {
+                RequestFormat = DataFormat.Json,
+                Method = Method.POST
+            }; // Test server
 
-            var UrlsReport = new UrlsReporterObject();
-            UrlsReport.email = "demo222@gmail.com";
+            var UrlsReport = new UrlsReporterObject
+            {
+                Email = "demo222@gmail.com"
+            };
             var urlsContent = new string[] { "https://www.demophishing.com" }; 
-            UrlsReport.urls = urlsContent;
+            UrlsReport.Urls = urlsContent;
 
             request.AddHeader("Accept", "application/json");
 
@@ -62,8 +66,8 @@ namespace ReportMail
                 if (!string.IsNullOrEmpty(restResponse.Content))
                 {
                     Console.WriteLine(restResponse.Content);
-                    Console.WriteLine("restResponse message is " + restResponse.Data.message);
-                    Console.WriteLine("restResponse uuid is " + restResponse.Data.uuid);
+                    Console.WriteLine("restResponse message is " + restResponse.Data.Message);
+                    Console.WriteLine("restResponse uuid is " + restResponse.Data.Uuid);
                 }
 
             }
