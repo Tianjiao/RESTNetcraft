@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
@@ -16,9 +17,11 @@ namespace ReportMail
 {
     internal class UrlsReporterObject
     {
+        [Required()]
         public string Email { get; set; } // Reporter's email
         public string Reason { get; set; }
         public string Source { get; set; }
+        [Required()]
         public string[] Urls { get; set; }
     }
 

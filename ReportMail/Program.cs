@@ -10,15 +10,22 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using RestSharp;
 using MimeKit;
 
 namespace ReportMail
 {
+    
     internal class MailObject
     {
+        // Require that the Email is not null.
+        // Use standard validation error.
+        [Required()]
         public string Email { get; set; }
+        [Required()]
         public string Message { get; set; }
+        public string Password { get; set; }
     }
 
     internal class UrlReportFeedbackObject
