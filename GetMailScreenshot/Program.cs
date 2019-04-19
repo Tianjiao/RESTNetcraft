@@ -9,13 +9,15 @@
 
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using RestSharp;
 
 namespace GetMailScreenshot
 {
     class Program
     {
-        public static void Main()
+        public static async Task Main()
         {
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
 
@@ -34,18 +36,23 @@ namespace GetMailScreenshot
             // Add HTTP headers
             request.AddHeader("User-Agent", "RESTNetcraft v0.1.1 Beta");
 
+            // https://stackoverflow.com/questions/21779206/how-to-use-restsharp-with-async-await
+            var cancellationTokenSource = new CancellationTokenSource();
+            var token = cancellationTokenSource.Token;
             // https://stackoverflow.com/questions/29123291/how-to-use-restsharp-to-download-file
             try
             {
                 var restResponse = client.DownloadData(request);
-                if (restResponse.Length > 0)
-                    File.WriteAllBytes(@"D:\MailScreenshot1.png", restResponse);
+                await File.WriteAllBytesAsync(@"D:\MailScreenshot1.png", restResponse, token);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-
+            finally
+            {
+                cancellationTokenSource.Dispose();
+            }
         }
     }
 }
