@@ -23,7 +23,7 @@ namespace GetSubmissionMail
             var client = new RestClient()
             {
                 BaseUrl = new Uri("https://report.netcraft.com/api/v1"),
-                UserAgent = "RESTNetcraft v0.1.3 Beta"
+                UserAgent = "RESTNetcraft v0.1.4 Beta"
             };
 
             var request = new RestRequest()

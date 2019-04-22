@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace ReportMail
             var client = new RestClient()
             {
                 BaseUrl = new Uri("https://report.netcraft.com/api/v1"),
-                UserAgent = "RESTNetcraft v0.1.3 Beta"
+                UserAgent = "RESTNetcraft v0.1.4 Beta"
             };
 
             var request = new RestRequest()
@@ -54,8 +55,12 @@ namespace ReportMail
             {
                 Email = "demo222@gmail.com"
             };
-            var urlsContent = new string[] { "https://www.demophishing.com" }; 
-            UrlsReport.Urls = urlsContent;
+            var urlsList = new List<string>
+            {
+                "https://www.demophishing.com",
+                "https://www.demophishing2.com"
+            };
+            UrlsReport.Urls = urlsList.ToArray();
 
             request.AddHeader("Accept", "application/json");
 
