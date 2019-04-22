@@ -40,13 +40,15 @@ namespace ReportMail
         {
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
 
-            var client = new RestClient("https://report.netcraft.com/api/v1")
+            var client = new RestClient()
             {
-                UserAgent = "RESTNetcraft v0.1.2 Beta"
+                BaseUrl = new Uri("https://report.netcraft.com/api/v1"),
+                UserAgent = "RESTNetcraft v0.1.3 Beta"
             };
 
-            var request = new RestRequest("test/report/mail")
+            var request = new RestRequest()
             {
+                Resource = "test/report/mail",
                 RequestFormat = DataFormat.Json,
                 Method = Method.POST
             }; // Test server

@@ -20,18 +20,20 @@ namespace GetSubmissionMail
         {
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
 
-            var client = new RestClient("https://report.netcraft.com/api/v1")
+            var client = new RestClient()
             {
-                UserAgent = "RESTNetcraft v0.1.2 Beta"
+                BaseUrl = new Uri("https://report.netcraft.com/api/v1"),
+                UserAgent = "RESTNetcraft v0.1.3 Beta"
             };
 
-            var request = new RestRequest("test/submission/{uuid}/mail")
+            var request = new RestRequest()
             {
+                Resource = "test/submission/{uuid}/mail",
                 RequestFormat = DataFormat.Json,
                 Method = Method.GET
             }; // Test server
 
-            request.AddUrlSegment("uuid", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // replaces matching token in request.Resource
+            request.AddUrlSegment("uuid", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // replaces matching uuid in request.Resource
 
             request.AddHeader("Accept", "application/json");
 
