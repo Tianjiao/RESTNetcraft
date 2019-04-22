@@ -20,7 +20,10 @@ namespace GetSubmissionMail
         {
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
 
-            var client = new RestClient("https://report.netcraft.com/api/v1");
+            var client = new RestClient("https://report.netcraft.com/api/v1")
+            {
+                UserAgent = "RESTNetcraft v0.1.2 Beta"
+            };
 
             var request = new RestRequest("test/submission/{uuid}/mail")
             {
@@ -31,9 +34,6 @@ namespace GetSubmissionMail
             request.AddUrlSegment("uuid", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // replaces matching token in request.Resource
 
             request.AddHeader("Accept", "application/json");
-
-            // Add HTTP headers
-            request.AddHeader("User-Agent", "RESTNetcraft v0.1.1 Beta");
 
             // https://stackoverflow.com/questions/21779206/how-to-use-restsharp-with-async-await
             var cancellationTokenSource = new CancellationTokenSource();

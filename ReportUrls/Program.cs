@@ -37,7 +37,10 @@ namespace ReportMail
         {
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
 
-            var client = new RestClient("https://report.netcraft.com/api/v1");
+            var client = new RestClient("https://report.netcraft.com/api/v1")
+            {
+                UserAgent = "RESTNetcraft v0.1.2 Beta"
+            };
 
             var request = new RestRequest("test/report/urls")
             {
@@ -55,9 +58,6 @@ namespace ReportMail
             request.AddHeader("Accept", "application/json");
 
             request.AddJsonBody(UrlsReport);
-
-            // Add HTTP headers
-            request.AddHeader("User-Agent", "RESTNetcraft v0.1.1 Beta");
 
             // https://stackoverflow.com/questions/21779206/how-to-use-restsharp-with-async-await
             var cancellationTokenSource = new CancellationTokenSource();
