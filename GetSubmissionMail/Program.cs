@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Net;
 using RestSharp;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +21,13 @@ namespace GetSubmissionMail
         {
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
 
+            // https://stackoverflow.com/questions/28286086/default-securityprotocol-in-net-4-5
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
             var client = new RestClient()
             {
                 BaseUrl = new Uri("https://report.netcraft.com/api/v1"),
-                UserAgent = "RESTNetcraft v0.1.4 Beta"
+                UserAgent = "RESTNetcraft v0.1.5 Beta"
             };
 
             var request = new RestRequest()

@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
@@ -22,10 +23,9 @@ namespace ReportMail
         // Require that the Email is not null.
         // Use standard validation error.
         [Required()]
-        public string Email { get; set; }
+        public string email { get; set; }
         [Required()]
-        public string Message { get; set; }
-        public string Password { get; set; }
+        public string message { get; set; }
     }
 
     internal class UrlReportFeedbackObject
@@ -40,10 +40,13 @@ namespace ReportMail
         {
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
 
+            // https://stackoverflow.com/questions/28286086/default-securityprotocol-in-net-4-5
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
             var client = new RestClient()
             {
                 BaseUrl = new Uri("https://report.netcraft.com/api/v1"),
-                UserAgent = "RESTNetcraft v0.1.4 Beta"
+                UserAgent = "RESTNetcraft v0.1.5 Beta"
             };
 
             var request = new RestRequest()
@@ -55,10 +58,10 @@ namespace ReportMail
 
             var messageSent = new MailObject
             {
-                Email = "demo222@gmail.com"
+                email = "example@netcraft.com"
             };
             var messageContent = MimeMessage.Load(@"D:\sample.eml");
-            messageSent.Message = messageContent.ToString();
+            messageSent.message = messageContent.ToString();
 
             request.AddHeader("Accept", "application/json");
 

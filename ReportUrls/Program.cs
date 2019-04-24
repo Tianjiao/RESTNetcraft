@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
@@ -19,11 +20,9 @@ namespace ReportMail
     internal class UrlsReporterObject
     {
         [Required()]
-        public string Email { get; set; } // Reporter's email
-        public string Reason { get; set; }
-        public string Source { get; set; }
+        public string email { get; set; } // Reporter's email
         [Required()]
-        public string[] Urls { get; set; }
+        public string[] urls { get; set; }
     }
 
     internal class UrlReportFeedbackObject
@@ -38,10 +37,13 @@ namespace ReportMail
         {
             Console.WriteLine("Welcome to RESTNetcraft - a REST Client for Netcraft!");
 
+            // https://stackoverflow.com/questions/28286086/default-securityprotocol-in-net-4-5
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
             var client = new RestClient()
             {
                 BaseUrl = new Uri("https://report.netcraft.com/api/v1"),
-                UserAgent = "RESTNetcraft v0.1.4 Beta"
+                UserAgent = "RESTNetcraft v0.1.5 Beta"
             };
 
             var request = new RestRequest()
@@ -53,14 +55,13 @@ namespace ReportMail
 
             var UrlsReport = new UrlsReporterObject
             {
-                Email = "demo222@gmail.com"
+                email = "example@netcraft.com"
             };
             var urlsList = new List<string>
             {
-                "https://www.demophishing.com",
-                "https://www.demophishing2.com"
+                "http://example.com"
             };
-            UrlsReport.Urls = urlsList.ToArray();
+            UrlsReport.urls = urlsList.ToArray();
 
             request.AddHeader("Accept", "application/json");
 
